@@ -1,138 +1,315 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#050914">
+<meta name="theme-color" content="#080916">
 <title>J.A.S.P.E.R. AI</title>
 
 <style>
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-    margin: 0;
-    background: #050914;
-    color: white;
-    font-family: Arial, sans-serif;
-    min-height: 100vh;
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse at 50% 42%, #17204a 0%, #090b1c 45%, #03040b 100%);
+  color: white;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  overflow-x: hidden;
+}
+
+.app {
+  width: 100%;
+  max-width: 520px;
+  min-height: 100vh;
+  padding: 28px 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 header {
-    padding: 25px 20px;
-    text-align: center;
-    border-bottom: 1px solid #12304c;
-}
-
-header h1 {
-    color: #20caff;
-    letter-spacing: 5px;
-    margin: 5px;
-}
-
-header p {
-    color: #718ba5;
-    font-size: 12px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  letter-spacing: 3px;
+  font-size: 13px;
+  color: #b9c7ff;
 }
 
 .status {
-    color: #35e8a5;
-    font-size: 12px;
-    margin-top: 15px;
+  color: #62f5d0;
+  font-size: 11px;
+  letter-spacing: 1px;
 }
 
 main {
-    padding: 25px 20px;
-    max-width: 600px;
-    margin: auto;
-    text-align: center;
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.core-area {
+  width: 290px;
+  height: 290px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin: 30px 0;
+}
+
+.orbit {
+  position: absolute;
+  width: 260px;
+  height: 260px;
+  border: 1px solid rgba(91, 224, 255, .3);
+  border-radius: 50%;
+  box-shadow: 0 0 25px rgba(63, 178, 255, .12);
+  animation: rotate 12s linear infinite;
+}
+
+.orbit.two {
+  width: 220px;
+  height: 280px;
+  transform: rotate(60deg);
+  border-color: rgba(205, 91, 255, .4);
+  animation-duration: 9s;
+  animation-direction: reverse;
+}
+
+.orbit.three {
+  width: 280px;
+  height: 180px;
+  transform: rotate(-35deg);
+  border-color: rgba(255, 102, 206, .3);
+  animation-duration: 15s;
 }
 
 .core {
-    width: 175px;
-    height: 175px;
-    border-radius: 50%;
-    margin: 35px auto;
-    background: radial-gradient(circle, #168cc9, #071a38 65%, #050914);
-    border: 2px solid #20caff;
-    box-shadow: 0 0 35px #087fc9;
-    animation: pulse 3s infinite;
+  width: 145px;
+  height: 145px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 30%, #ffffff 0%, #9efaff 5%, #38baff 22%, #7848ff 52%, #e044c7 78%, #1b174f 100%);
+  box-shadow:
+    0 0 25px #43caff,
+    0 0 65px rgba(103, 68, 255, .8),
+    0 0 110px rgba(219, 55, 213, .35);
+  animation: pulse 3s ease-in-out infinite, colors 9s linear infinite;
+  position: relative;
+}
+
+.core::after {
+  content: "";
+  position: absolute;
+  inset: -12px;
+  border-radius: 50%;
+  border: 2px solid rgba(119, 231, 255, .35);
+  filter: blur(2px);
+}
+
+@keyframes rotate {
+  to { transform: rotate(360deg); }
 }
 
 @keyframes pulse {
-    50% {
-        box-shadow: 0 0 65px #087fc9;
-    }
+  0%, 100% { transform: scale(.94); }
+  50% { transform: scale(1.08); }
+}
+
+@keyframes colors {
+  0%, 100% { filter: hue-rotate(0deg); }
+  50% { filter: hue-rotate(100deg); }
+}
+
+h1 {
+  font-size: 28px;
+  letter-spacing: 8px;
+  font-weight: 400;
+  margin-top: 8px;
+  text-shadow: 0 0 18px #7e82ff;
 }
 
 .subtitle {
-    color: #8ba9c4;
-    margin-bottom: 25px;
-}
-
-#chat {
-    height: 220px;
-    overflow-y: auto;
-    border: 1px solid #173650;
-    border-radius: 12px;
-    padding: 15px;
-    text-align: left;
-    background: #091322;
-    margin-bottom: 15px;
+  color: #8494c7;
+  font-size: 11px;
+  letter-spacing: 4px;
+  margin-top: 9px;
 }
 
 .message {
-    margin: 12px 0;
-    line-height: 1.5;
+  min-height: 45px;
+  margin: 30px 0 20px;
+  color: #c4d4ff;
+  text-align: center;
+  line-height: 1.5;
+  font-size: 14px;
 }
 
-.jarvis {
-    color: #20caff;
-}
-
-.user {
-    color: #ffffff;
-}
-
-.input-area {
-    display: flex;
-    gap: 8px;
+.controls {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 input {
-    flex: 1;
-    min-width: 0;
-    padding: 14px;
-    border-radius: 10px;
-    border: 1px solid #17618a;
-    background: #101d2d;
-    color: white;
-    font-size: 15px;
+  width: 100%;
+  padding: 16px;
+  border-radius: 30px;
+  border: 1px solid rgba(120, 166, 255, .4);
+  background: rgba(14, 20, 48, .8);
+  color: white;
+  font-size: 14px;
+  outline: none;
+}
+
+input::placeholder {
+  color: #8995b9;
 }
 
 button {
-    border: none;
-    border-radius: 10px;
-    padding: 13px;
-    background: #087fc9;
-    color: white;
-    font-weight: bold;
+  border: 1px solid rgba(126, 186, 255, .5);
+  border-radius: 30px;
+  padding: 15px;
+  color: white;
+  background: linear-gradient(100deg, #4931a6, #176d9e, #963b9d);
+  font-size: 14px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  box-shadow: 0 0 20px rgba(82, 111, 255, .2);
 }
 
 button:active {
-    opacity: 0.7;
+  transform: scale(.98);
 }
 
-#voice {
-    width: 100%;
-    margin-top: 12px;
-    padding: 16px;
-    background: #102d47;
-    border: 1px solid #20caff;
+.voice-button {
+  background: rgba(22, 30, 65, .8);
 }
 
 footer {
-    text-align: center;
-    color: #526b83;
-    font-size: 11
+  color: #59668f;
+  font-size: 10px;
+  letter-spacing: 2px;
+  margin-top: 30px;
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+<header>
+  <span>J.A.S.P.E.R.</span>
+  <span class="status" id="status">● ONLINE</span>
+</header>
+
+<main>
+  <div class="core-area">
+    <div class="orbit"></div>
+    <div class="orbit two"></div>
+    <div class="orbit three"></div>
+    <div class="core"></div>
+  </div>
+
+  <h1>JASPER</h1>
+  <div class="subtitle">PERSONAL AI ASSISTANT</div>
+
+  <div class="message" id="message">
+    Sistemas inicializados.<br>
+    Como posso ajudar você?
+  </div>
+
+  <div class="controls">
+    <input
+      id="question"
+      type="text"
+      placeholder="Digite uma mensagem para Jasper..."
+    >
+
+    <button onclick="sendMessage()">
+      ENVIAR MENSAGEM
+    </button>
+
+    <button class="voice-button" onclick="speakMessage()">
+      🔊 TESTAR VOZ DO JASPER
+    </button>
+  </div>
+</main>
+
+<footer>
+  J.A.S.P.E.R. AI • SYSTEM INTERFACE
+</footer>
+
+</div>
+
+<script>
+const message = document.getElementById("message");
+const question = document.getElementById("question");
+const statusText = document.getElementById("status");
+
+function sendMessage() {
+  const text = question.value.trim();
+
+  if (!text) {
+    message.textContent = "Estou aguardando sua mensagem.";
+    return;
+  }
+
+  message.textContent =
+    "Mensagem recebida: " + text +
+    ". Minha interface está funcionando. A inteligência artificial será conectada em uma próxima etapa.";
+
+  question.value = "";
+}
+
+function speakMessage() {
+  if (!("speechSynthesis" in window)) {
+    message.textContent =
+      "Seu navegador não oferece suporte à síntese de voz.";
+    return;
+  }
+
+  window.speechSynthesis.cancel();
+
+  const speech = new SpeechSynthesisUtterance(
+    "Olá. Eu sou Jasper, seu assistente pessoal. Sistemas funcionando. Como posso ajudar?"
+  );
+
+  speech.lang = "pt-BR";
+  speech.rate = 0.95;
+  speech.pitch = 1.0;
+
+  speech.onstart = () => {
+    statusText.textContent = "● FALANDO";
+  };
+
+  speech.onend = () => {
+    statusText.textContent = "● ONLINE";
+  };
+
+  window.speechSynthesis.speak(speech);
+}
+
+question.addEventListener("keydown", function(event) {
+  if (event.key === "Enter") {
+    sendMessage();
+  }
+});
+</script>
+
+</body>
+</html>
